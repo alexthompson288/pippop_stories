@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <rect key="frame" x="20" y="140" width="628" height="43"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="20" y="126" width="628" height="0.0"/>
+                    </variation>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 Altitude Education Ltd. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <rect key="frame" x="355" y="698" width="314" height="62"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="314" id="AG7-KA-SQK"/>
+                        <constraint firstAttribute="height" constant="62" id="AiU-iz-MiV"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="KiJ-Vv-b83"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="314" id="UZV-bi-Syu"/>
+                        <constraint firstAttribute="width" constant="314" id="hNu-G0-3F4"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="niA-uK-mfc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="KiJ-Vv-b83"/>
+                            <exclude reference="UZV-bi-Syu"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=regular">
+                        <mask key="constraints">
+                            <exclude reference="KiJ-Vv-b83"/>
+                            <exclude reference="UZV-bi-Syu"/>
+                        </mask>
+                    </variation>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pippop_videos_splash" translatesAutoresizingMaskIntoConstraints="NO" id="qRz-es-upy">
+                    <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="768" id="3GT-kK-o3b"/>
+                        <constraint firstAttribute="width" constant="1024" id="4sj-Sa-4WN"/>
+                        <constraint firstAttribute="height" constant="343" id="DDh-Fb-wTj"/>
+                        <constraint firstAttribute="width" constant="457" id="OLM-bB-Jie"/>
+                        <constraint firstAttribute="height" constant="417" id="jaj-UA-6cw"/>
+                        <constraint firstAttribute="width" constant="556" id="l7r-Eg-ZIN"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="3GT-kK-o3b"/>
+                            <exclude reference="4sj-Sa-4WN"/>
+                            <exclude reference="DDh-Fb-wTj"/>
+                            <exclude reference="OLM-bB-Jie"/>
+                            <exclude reference="jaj-UA-6cw"/>
+                            <exclude reference="l7r-Eg-ZIN"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=compact-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="DDh-Fb-wTj"/>
+                            <include reference="OLM-bB-Jie"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=compact-widthClass=regular">
+                        <mask key="constraints">
+                            <include reference="jaj-UA-6cw"/>
+                            <include reference="l7r-Eg-ZIN"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=regular">
+                        <mask key="constraints">
+                            <include reference="3GT-kK-o3b"/>
+                            <include reference="4sj-Sa-4WN"/>
+                        </mask>
+                    </variation>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.50980392159999999" green="0.91764705879999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="qRz-es-upy" secondAttribute="centerY" constant="0.5" id="JyF-Cz-tm6"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="8" id="VnK-wv-gvn"/>
+                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="X75-P6-K99"/>
+                <constraint firstAttribute="centerX" secondItem="qRz-es-upy" secondAttribute="centerX" id="ZZs-LJ-DgU"/>
+                <constraint firstAttribute="centerY" secondItem="qRz-es-upy" secondAttribute="centerY" id="aS6-7v-tcy"/>
+                <constraint firstAttribute="centerX" secondItem="qRz-es-upy" secondAttribute="centerX" id="fUn-Zb-kpX"/>
+                <constraint firstAttribute="centerY" secondItem="qRz-es-upy" secondAttribute="centerY" constant="0.5" id="j1c-LH-GL7"/>
+                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="qAp-jr-51K"/>
+                <constraint firstAttribute="centerX" secondItem="qRz-es-upy" secondAttribute="centerX" constant="-0.5" id="viQ-cf-Bgn"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="8" id="yN8-7W-5M7"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="JyF-Cz-tm6"/>
+                    <exclude reference="ZZs-LJ-DgU"/>
+                    <exclude reference="aS6-7v-tcy"/>
+                    <exclude reference="fUn-Zb-kpX"/>
+                    <exclude reference="j1c-LH-GL7"/>
+                    <exclude reference="viQ-cf-Bgn"/>
+                    <exclude reference="qAp-jr-51K"/>
+                    <exclude reference="yN8-7W-5M7"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="qRz-es-upy"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="j1c-LH-GL7"/>
+                    <include reference="viQ-cf-Bgn"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact-widthClass=regular">
+                <mask key="subviews">
+                    <include reference="qRz-es-upy"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="JyF-Cz-tm6"/>
+                    <include reference="fUn-Zb-kpX"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=regular">
+                <mask key="subviews">
+                    <include reference="qRz-es-upy"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="ZZs-LJ-DgU"/>
+                    <include reference="aS6-7v-tcy"/>
+                    <include reference="qAp-jr-51K"/>
+                    <include reference="yN8-7W-5M7"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="548" y="455"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pippop_videos_splash" width="1024" height="768"/>
+    </resources>
+</document>

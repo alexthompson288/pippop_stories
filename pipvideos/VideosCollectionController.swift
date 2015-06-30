@@ -10,7 +10,6 @@ let userDownloadsVideo = "user_downloads_video"
 class VideosCollectionController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SKProductsRequestDelegate, SKPaymentTransactionObserver {
     
     
-    @IBOutlet weak var DownloadProgressBar: UIProgressView!
     @IBOutlet weak var TitleLabel: UILabel!
     @IBOutlet weak var ErrorLabel: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
@@ -107,9 +106,6 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidLoad() {
         
         println("998877 - There are \(self.VideosCollectionView.numberOfItemsInSection(0)) items in the section.")
-        self.DownloadProgressBar.hidden = true
-        self.CancelDownloadLabel.hidden = true
-        
         ParentGateView.hidden = true
         PaymentView.hidden = true
         
@@ -127,10 +123,7 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         
 //        ADD OBSERVER TO POP UP PAYMENT GATEWAY
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPaymentView", name: userPressedPadlock, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "downloadVideo:", name: userDownloadsVideo, object: nil)
-
         super.viewDidLoad()
-        
         getProductIds()
         
 //        SET DELEGATE FOR COLLECTION VIEW
@@ -172,12 +165,6 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         var urlImageLocal = video["url_image_local"] as! String
         var activityId = video["id"] as! Int
         
-        if self.isDownloading == true {
-            Mycell.DownloadButtonLabel.hidden = true
-        } else {
-            Mycell.DownloadButtonLabel.hidden = false
-        }
-        
         if self.premium_access == true {
             canWatch = true
         } else if requires_subscription == false {
@@ -192,8 +179,6 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         Mycell.VideoOverviewLabel.text = description
         Mycell.VideoTitle.text = (label as String)
         Mycell.VideoTitlaVar = (label as String)
-        Mycell.url_video_remote = video["url_video_remote"] as! String
-        Mycell.url_video_local = video["url_video_local"] as! String
         if canWatch == false {
             Mycell.VideoLockedImage.image = UIImage(named: "lock")
         } else if canWatch == true {
@@ -213,7 +198,7 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         if filemgr.fileExistsAtPath(cachedimgpath){
 //            println("There is an image saved here: \(cachedimgpath). Setting image.")
             var img = UIImage(named: cachedimgpath)
-            Mycell.PlayVideoLabel.setBackgroundImage(img, forState: .Normal)
+            Mycell.BookImage.image = img
 
         } else {
             //            GET IMAGE FROM NETWORK
@@ -225,7 +210,8 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
                     self.filemgr.createFileAtPath(cachedimgpath, contents: data,
                         attributes: nil)
                     var img = UIImage(named: cachedimgpath)
-                    Mycell.PlayVideoLabel.setBackgroundImage(img, forState: .Normal)
+                    Mycell.BookImage.image = img
+
 //                    println("Saved image to cached path \(cachedimgpath)")
                 }
                 else {
@@ -233,35 +219,30 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
                 }
             })
         }
-        
-        //    CHECK IF LOCAL VERSION EXISTS AND SET HASLOCALVIDEO VARIABLE
-        var hasLocalVersion = false
-        var video_filename = data[indexPath.row]["url_video_local"] as! String
-        var filePath = Utility.createFilePathInDocsDir(video_filename)
-        var fileExists = Utility.checkIfFileExistsAtPath(filePath)
-        if fileExists {
-//            println("File exists locally")
-            hasLocalVersion = true
-//            SET THE ICON ON THE COLLECTION CELL
-            Mycell.VideoLocalIcon.image = UIImage(named: "offline")
-            Mycell.ContainerView.backgroundColor = ColourValues.greenColor
-//            CREATE URL LOCATION AND SET DO NOT BACKUP FLAG
-            var totalurl = NSURL()
-            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-//                println("Video filename... \(video_filename)")
-                totalurl = directoryURL.URLByAppendingPathComponent(video_filename)
-//                println("Total url")
-//                println(totalurl)
-            }
-            self.addSkipBackupAttributeToItemAtURL(totalurl)
-        } else {
-//            println("File NOT written to disc")
-            hasLocalVersion = false
-        }
-        Mycell.hasLocalVideo = hasLocalVersion
-//        println("99887766 - There are \(self.VideosCollectionView.numberOfItemsInSection(0)) items in the section.")
 
         return Mycell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        var requires_subscription = data[indexPath.row]["requires_subscription"] as! Bool
+        var canWatch: Bool!
+
+        if self.premium_access == true {
+            canWatch = true
+        } else if requires_subscription == false {
+            canWatch = true
+        } else {
+            canWatch = false
+        }
+        if canWatch == true {
+            var vc:ReadingContentController = self.storyboard?.instantiateViewControllerWithIdentifier("ReadingContentID") as! ReadingContentController
+            var specData = data[indexPath.row]["bookpages"] as! NSArray
+            vc.activityData = []
+            vc.activityData = specData
+            self.presentViewController(vc, animated: true, completion: nil)
+        } else {
+            showPaymentView()
+        }
     }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
@@ -269,21 +250,6 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         UIView.animateWithDuration(0.25, animations: {
             cell.layer.transform = CATransform3DMakeScale(1,1,1)
         })
-    }
-    
-    func addSkipBackupAttributeToItemAtURL(URL:NSURL) ->Bool{
-        let fileManager = NSFileManager.defaultManager()
-//        println("URL is \(URL.absoluteString)")
-        //        assert(fileManager.fileExistsAtPath(URL.absoluteString!))
-        var error:NSError?
-        let success = URL.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey, error: &error)
-        if !success{
-            println("Error excluding \(URL.lastPathComponent) from backup \(error)")
-        }
-        else{
-            println("Successfully set do not back up flag at \(URL.absoluteString)")
-        }
-        return success;
     }
     
     @IBAction func BackButton(sender: AnyObject) {
@@ -305,7 +271,7 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
     
     func getProductIds(){
         println("Getting product IDS")
-        var productID:NSSet = NSSet(object: "pippop_monthly_5_via_videos")
+        var productID:NSSet = NSSet(object: "pippop_monthly_5_via_books")
         var productRequest: SKProductsRequest = SKProductsRequest(productIdentifiers: productID as Set<NSObject>)
         productRequest.delegate = self
         productRequest.start()
@@ -327,7 +293,7 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
                 
                 let prodID = product.productIdentifier as String
                 switch prodID {
-                case "pippop_monthly_5_via_videos":
+                case "pippop_monthly_5_via_books":
                     println("Buying the IAP")
                     println("Transaction identifier is \(trans.transactionIdentifier)")
                     unlockContent()
@@ -431,11 +397,15 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
     func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
         println("Response received from Apple is \(response)")
         var prods = response.products as Array
-        for prod in prods {
-            self.products.append(prod as! SKProduct)
+        if prods.count > 0 {
+            "There are products coming back with the id name"
+            for prod in prods {
+                self.products.append(prod as! SKProduct)
+            }
+    //        NEED TO COMMENT BACK IN WHEN IAP LIVE
+            self.product = self.products[0]
+            println("The product saved is \(self.product). Name is \(self.product.localizedTitle). Price is \(self.product.price)")
         }
-        self.product = self.products[0]
-        println("The product saved is \(self.product). Name is \(self.product.localizedTitle). Price is \(self.product.price)")
     }
     
     @IBAction func DismissPaymentView(sender: AnyObject) {
@@ -479,41 +449,6 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
     
     override func supportedInterfaceOrientations() -> Int {
         return Int(UIInterfaceOrientationMask.Landscape.rawValue)
-    }
-    
-    @IBAction func cancelDownload(sender: AnyObject) {
-        println("Cancelling download")
-        self.isDownloading = false
-        self.VideosCollectionView.scrollEnabled = true
-        dispatch_async(dispatch_get_main_queue()){
-            if let req = self.alamoRequest {
-                req.cancel()
-                println("Request cancelled!")
-                self.alamoRequest = nil
-            }
-        }
-        self.DownloadProgressBar.setProgress(0.0, animated: true)
-        self.DownloadProgressBar.hidden = true
-        self.CancelDownloadLabel.hidden = true
-
-        self.TitleLabel.text = "Download cancelled"
-        let delay = 3.0 * Double(NSEC_PER_SEC)
-
-        var time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue(), {
-            self.TitleLabel.text = ""
-        })
-    }
-    
-    
-    func downloadVideo(notification: NSNotification) {
-        connected = Reachability.isConnectedToNetwork()
-        if connected == true {
-
-        } else {
-            println("No Internet")
-            self.TitleLabel.text = "No internet. Unable to download."
-        }
     }
     
 }

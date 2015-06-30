@@ -7,13 +7,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
                     <rect key="frame" x="20" y="140" width="628" height="43"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
                         <rect key="frame" x="20" y="126" width="628" height="0.0"/>
@@ -30,7 +30,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="niA-uK-mfc"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
@@ -45,13 +45,23 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pippop_videos_splash" translatesAutoresizingMaskIntoConstraints="NO" id="qRz-es-upy">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pippop_stories_splashscreen" translatesAutoresizingMaskIntoConstraints="NO" id="qRz-es-upy">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="768" id="3GT-kK-o3b"/>
-                        <constraint firstAttribute="width" constant="1024" id="4sj-Sa-4WN"/>
+                        <constraint firstAttribute="height" constant="768" id="3GT-kK-o3b">
+                            <variation key="heightClass=regular-widthClass=regular" constant="609"/>
+                        </constraint>
+                        <constraint firstAttribute="width" constant="1024" id="4sj-Sa-4WN">
+                            <variation key="heightClass=regular-widthClass=regular" constant="858"/>
+                        </constraint>
+                        <constraint firstAttribute="height" constant="768" id="9bs-1k-Hbq">
+                            <variation key="heightClass=regular-widthClass=regular" constant="609"/>
+                        </constraint>
                         <constraint firstAttribute="height" constant="343" id="DDh-Fb-wTj"/>
                         <constraint firstAttribute="width" constant="457" id="OLM-bB-Jie"/>
+                        <constraint firstAttribute="width" constant="1024" id="SEt-I2-BLn">
+                            <variation key="heightClass=regular-widthClass=regular" constant="858"/>
+                        </constraint>
                         <constraint firstAttribute="height" constant="417" id="jaj-UA-6cw"/>
                         <constraint firstAttribute="width" constant="556" id="l7r-Eg-ZIN"/>
                     </constraints>
@@ -91,7 +101,9 @@
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="8" id="VnK-wv-gvn"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="X75-P6-K99"/>
                 <constraint firstAttribute="centerX" secondItem="qRz-es-upy" secondAttribute="centerX" id="ZZs-LJ-DgU"/>
+                <constraint firstAttribute="centerX" secondItem="qRz-es-upy" secondAttribute="centerX" id="a5o-pe-uqM"/>
                 <constraint firstAttribute="centerY" secondItem="qRz-es-upy" secondAttribute="centerY" id="aS6-7v-tcy"/>
+                <constraint firstAttribute="centerY" secondItem="qRz-es-upy" secondAttribute="centerY" id="fO6-qY-qNV"/>
                 <constraint firstAttribute="centerX" secondItem="qRz-es-upy" secondAttribute="centerX" id="fUn-Zb-kpX"/>
                 <constraint firstAttribute="centerY" secondItem="qRz-es-upy" secondAttribute="centerY" constant="0.5" id="j1c-LH-GL7"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="qAp-jr-51K"/>
@@ -100,7 +112,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="JyF-Cz-tm6"/>
@@ -146,6 +158,6 @@
         </view>
     </objects>
     <resources>
-        <image name="pippop_videos_splash" width="1024" height="768"/>
+        <image name="pippop_stories_splashscreen" width="1758" height="767"/>
     </resources>
 </document>

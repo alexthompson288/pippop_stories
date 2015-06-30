@@ -27,11 +27,13 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
     var learners = []
     var learnerName: String?
     var learnerID: Int?
+    var access_token: String!
     var moviePlayer = MPMoviePlayerController()
     
     @IBOutlet weak var LoggedInAsLabel: UILabel!
     
     override func viewDidLoad() {
+        self.access_token = NSUserDefaults.standardUserDefaults().objectForKey("access_token") as! String
         self.moviePlayer.stop()
         //        var token = NSUserDefaults.standardUserDefaults().objectForKey("access_token") as! NSString
         //        println("Access token is \(token)")
@@ -109,23 +111,31 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
         if fileExists {
             println("File exists at \(filePath)...")
             var thisDict = Utility.loadJSONDataAtFilePath(filePath)
-            var thisData: NSArray = thisDict["subjects"] as! NSArray
+            var thisData: NSArray = thisDict["storysets"] as! NSArray
             self.data = thisData
             println("Number of experiences is \(data.count)")
 //            self.ActivitySpinner.stopAnimating()
 //            self.ActivitySpinner.hidden = true
             return;
         } else {
-            var url = Constants.PipisodesUrl
+            var url = Constants.BooksUrl
             println("File doesn't exist locally. Constant is \(url)")
-            getJSON(url)
+            if let learner = self.learnerID {
+                println("Getting JSON FROM SERVER FOR BOOKS")
+                getJSON(url, token: self.access_token, learner_id: learner)
+            }
+            
         }
     }
     
-    func getJSON(api:String) {
+    func getJSON(api:String, token: String, learner_id: Int) {
         let url = NSURL(string: api)!
         let request = NSMutableURLRequest(URL: url)
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Token token=\(token)", forHTTPHeaderField: "Authorization")
+        
+        request.HTTPBody = "{\n\"learner_id\": \(learner_id)\n}".dataUsingEncoding(NSUTF8StringEncoding);
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { (data: NSData!, response: NSURLResponse!, error: NSError!) in
             if error != nil {
@@ -177,6 +187,8 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
         println("Image remote url is \(urlImageRemote)")
         var urlImageOffline = subject["url_image_local"] as! String
         println("Offline image name is \(urlImageOffline)")
+        var thisDescription = subject["description"] as! String
+        Mycell.SubjectDescriptionLabel.text = thisDescription
         
 //        CHECK IF IMAGE IN CACHE
         let cachedir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0] as! NSString
@@ -215,7 +227,7 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
 //        mixpanel.identify("\(learnerID!)");
 //        mixpanel.track("Chose a subject")
         var vc: VideosCollectionController = self.storyboard?.instantiateViewControllerWithIdentifier("VideoCollectionID") as! VideosCollectionController
-        var specData = data[indexPath.row]["pipisodes"] as! NSArray
+        var specData = data[indexPath.row]["books"] as! NSArray
         vc.data = []
         vc.data = specData
         self.presentViewController(vc, animated: true, completion: nil)
@@ -243,6 +255,7 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
             
             learners = data["learners"] as! NSArray
             if let currentLearner = NSUserDefaults.standardUserDefaults().objectForKey("learnerID") as? Int {
+                println("Setting learner ID value")
                 self.learnerID = currentLearner
                 self.learnerName = NSUserDefaults.standardUserDefaults().objectForKey("learnerName") as? String
             } else {
@@ -258,7 +271,7 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
                 NSUserDefaults.standardUserDefaults().setObject(name, forKey: "learnerName")
                 NSUserDefaults.standardUserDefaults().setObject(id, forKey: "learnerID")
                 NSUserDefaults.standardUserDefaults().setObject(premium_access, forKey: "premium_access")
-                
+                self.learnerID = NSUserDefaults.standardUserDefaults().objectForKey("learnerID") as? Int
                 learnerName = NSUserDefaults.standardUserDefaults().objectForKey("learnerName") as? String
             }
         }
@@ -269,9 +282,11 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
     }
     
     @IBAction func updateData(sender: AnyObject) {
-        var url = Constants.PipisodesUrl
-        println("Updating data manually \(url)")
-        getJSON(url)
+        var url = Constants.BooksUrl
+        var thisLearner = NSUserDefaults.standardUserDefaults().objectForKey("learnerID") as! Int
+        println("Updating data manually \(url). Learner id is \(thisLearner)")
+        println("Getting JSON FROM SERVER FOR BOOKS")
+        getJSON(url, token: self.access_token, learner_id: thisLearner)
     }
     
     

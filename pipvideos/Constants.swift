@@ -24,4 +24,5 @@ struct Constants {
     static let SubscriptionsUrl = "https://www.pippoplearning.com/api/v3/apple8subscriptions"
     static let PerformancesUrl = "https://www.pippoplearning.com/api/v3/performances"
     static let PromotionVideoUrl = "https://s3-us-west-2.amazonaws.com/pipresources/pippop_marketing_inapp_video.mp4"
+    static let BooksUrl = "https://www.pippoplearning.com/api/v3/books"
 }

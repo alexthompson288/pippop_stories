@@ -21,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mixpanel.identify(mixpanel.distinctId)
         mixpanel.track("App Launched")
         mixpanel.people.increment(["People Prop":1])
+        var pageController = UIPageControl.appearance()
+        pageController.pageIndicatorTintColor = UIColor.grayColor()
+        pageController.currentPageIndicatorTintColor = UIColor.blackColor()
+        pageController.backgroundColor = UIColor.whiteColor()
         return true
     }
 

@@ -13,9 +13,11 @@
 		D52BD9AF1A7C12F700BBB0EE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D52BD9AD1A7C12F700BBB0EE /* LaunchScreen.xib */; };
 		D52BD9BB1A7C12F700BBB0EE /* pipvideosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52BD9BA1A7C12F700BBB0EE /* pipvideosTests.swift */; };
 		D57B552D1B3C64800032C6A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57B552B1B3C64800032C6A7 /* Main.storyboard */; };
+		D5A8A4021B42B41C00A3C7FA /* ReadingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8A4011B42B41C00A3C7FA /* ReadingContentController.swift */; };
+		D5A8A4041B42B43C00A3C7FA /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8A4031B42B43C00A3C7FA /* ContentViewController.swift */; };
+		D5A8A4061B42D30600A3C7FA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5A8A4051B42D30600A3C7FA /* StoreKit.framework */; };
 		D5BA5B9A1B2AED9C000FF6FE /* iPhoneLoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D5BA5B991B2AED93000FF6FE /* iPhoneLoginVideo.mp4 */; };
 		D5BA5B9B1B2AED9C000FF6FE /* iPadLoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D5BA5B981B2AEC64000FF6FE /* iPadLoginVideo.mp4 */; };
-		D5BA5B9D1B2B4842000FF6FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BA5B9C1B2B4842000FF6FE /* StoreKit.framework */; };
 		D5BA5B9F1B2F97A0000FF6FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BA5B9E1B2F97A0000FF6FE /* CFNetwork.framework */; };
 		D5BA5BA11B2F97A5000FF6FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BA5BA01B2F97A5000FF6FE /* Security.framework */; };
 		D5BA5BA31B2F97B2000FF6FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BA5BA21B2F97B2000FF6FE /* libicucore.dylib */; };
@@ -67,9 +69,11 @@
 		D52BD9BA1A7C12F700BBB0EE /* pipvideosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pipvideosTests.swift; sourceTree = "<group>"; };
 		D5414C291A910A210001FA7D /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		D57B552C1B3C64800032C6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D5A8A4011B42B41C00A3C7FA /* ReadingContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingContentController.swift; sourceTree = "<group>"; };
+		D5A8A4031B42B43C00A3C7FA /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		D5A8A4051B42D30600A3C7FA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D5BA5B981B2AEC64000FF6FE /* iPadLoginVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = iPadLoginVideo.mp4; sourceTree = "<group>"; };
 		D5BA5B991B2AED93000FF6FE /* iPhoneLoginVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = iPhoneLoginVideo.mp4; sourceTree = "<group>"; };
-		D5BA5B9C1B2B4842000FF6FE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D5BA5B9E1B2F97A0000FF6FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		D5BA5BA01B2F97A5000FF6FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D5BA5BA21B2F97B2000FF6FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -95,9 +99,9 @@
 			files = (
 				D5BA5BA31B2F97B2000FF6FE /* libicucore.dylib in Frameworks */,
 				D5BA5BA11B2F97A5000FF6FE /* Security.framework in Frameworks */,
+				D5A8A4061B42D30600A3C7FA /* StoreKit.framework in Frameworks */,
 				D5BA5B9F1B2F97A0000FF6FE /* CFNetwork.framework in Frameworks */,
 				AD91584B703F045BF28A5B89 /* Pods_Pip_Videos.framework in Frameworks */,
-				D5BA5B9D1B2B4842000FF6FE /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,10 +118,10 @@
 		50C38FCEA303C6F7B078481E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D5A8A4051B42D30600A3C7FA /* StoreKit.framework */,
 				D5BA5BA21B2F97B2000FF6FE /* libicucore.dylib */,
 				D5BA5BA01B2F97A5000FF6FE /* Security.framework */,
 				D5BA5B9E1B2F97A0000FF6FE /* CFNetwork.framework */,
-				D5BA5B9C1B2B4842000FF6FE /* StoreKit.framework */,
 				F802BA2CEC17593EA2578CA4 /* Pods_Pip_Videos.framework */,
 			);
 			name = Frameworks;
@@ -153,6 +157,8 @@
 				D5BA5BA41B2F996B000FF6FE /* Mixpanel.swift */,
 				D5BB5CFA1B29A525003D9729 /* VideosCollectionController.swift */,
 				D5BB5CFC1B29A733003D9729 /* VideoCollectionCell.swift */,
+				D5A8A4011B42B41C00A3C7FA /* ReadingContentController.swift */,
+				D5A8A4031B42B43C00A3C7FA /* ContentViewController.swift */,
 				D5BB5CF21B299EF9003D9729 /* SubjectsCollectionController.swift */,
 				D5BB5CF41B29A250003D9729 /* SubjectCollectionCell.swift */,
 				D5BB5CEE1B2997C8003D9729 /* NewLoginController.swift */,
@@ -368,6 +374,7 @@
 				D5BB5CED1B2997C4003D9729 /* Utility.swift in Sources */,
 				D5BB5CF31B299EF9003D9729 /* SubjectsCollectionController.swift in Sources */,
 				D5BB5CF71B29A386003D9729 /* Imageloader.swift in Sources */,
+				D5A8A4041B42B43C00A3C7FA /* ContentViewController.swift in Sources */,
 				D5BB5CFD1B29A733003D9729 /* VideoCollectionCell.swift in Sources */,
 				D5BA5BA51B2F996B000FF6FE /* Mixpanel.swift in Sources */,
 				D5BB5CFB1B29A525003D9729 /* VideosCollectionController.swift in Sources */,
@@ -375,6 +382,7 @@
 				D5BB5CF51B29A250003D9729 /* SubjectCollectionCell.swift in Sources */,
 				D5BB5D011B29F76D003D9729 /* CustomWidgets.swift in Sources */,
 				D5BB5CEF1B2997C8003D9729 /* NewLoginController.swift in Sources */,
+				D5A8A4021B42B41C00A3C7FA /* ReadingContentController.swift in Sources */,
 				D5BB5CF11B2997E5003D9729 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

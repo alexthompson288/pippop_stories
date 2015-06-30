@@ -14,5 +14,6 @@ class SubjectCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var SubjectTitleLabel: UILabel!
     
+    @IBOutlet weak var SubjectDescriptionLabel: UILabel!
 }
 

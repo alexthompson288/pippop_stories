@@ -61,7 +61,6 @@ class Utility {
             return true
         } else {
             println("File does NOT exist at \(filepath)")
-            
             return false
         }
     }
@@ -81,6 +80,11 @@ class Utility {
     
     class func createFilePathInDocsDir(filename: String) -> String {
         var filepath  = "\(Constants.homedir)/\(filename)"
+        return filepath
+    }
+    
+    class func createFilePathInCachesDir(filename: String) -> String {
+        var filepath  = "\(Constants.cachedir)/\(filename)"
         return filepath
     }
     
@@ -207,6 +211,14 @@ class Utility {
         return fullPath
     }
     
+    class func cachesPathForFileName(name: String) -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true);
+        let path = paths[0] as! String;
+        let fullPath = path.stringByAppendingPathComponent(name)
+        
+        return fullPath
+    }
+    
     class func condenseWhiteSpace(string: String) -> String {
         let components = string.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).filter({!isEmpty($0)})
         return join(" ", components)
@@ -229,6 +241,26 @@ class Utility {
         activityViewController.excludedActivityTypes = [UIActivityTypeCopyToPasteboard,UIActivityTypeAirDrop,UIActivityTypeAddToReadingList,UIActivityTypeAssignToContact,UIActivityTypePostToTencentWeibo,UIActivityTypePostToVimeo,UIActivityTypePrint,UIActivityTypeSaveToCameraRoll,UIActivityTypePostToWeibo]
         
         return activityViewController
+    }
+    
+    class func writeImagesLocally(dataInput: NSDictionary) {
+        var localImageFilename = dataInput["url_image_local"] as! NSString
+        var remoteImageFilename = dataInput["url_image_remote"] as! NSString
+        var imgPathAsStringExtra = Utility.createFilePathInCachesDir(localImageFilename as String)
+        var fileExists = Utility.checkIfFileExistsAtPath(imgPathAsStringExtra)
+        if fileExists == true {
+            println("Local file exists at \(imgPathAsStringExtra)")
+        } else {
+            let URL = NSURL(string: remoteImageFilename as String)
+            let qos = Int(QOS_CLASS_USER_INITIATED.value)
+            println("About to run async off main queue")
+            dispatch_async(dispatch_get_global_queue(qos, 0)){() -> Void in
+                let imageData = NSData(contentsOfURL: URL!)
+                var localPath:NSString = Utility.cachesPathForFileName(localImageFilename as String)
+                imageData!.writeToFile(localPath as String, atomically: true)
+                println("Written image as data to \(localPath)")
+            }
+        }
     }
     
     
@@ -288,7 +320,8 @@ class Utility {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Token token=\(token)", forHTTPHeaderField: "Authorization")
         
-        request.HTTPBody = "{\n\"performance\": {\n\"data\": [\n{\n\"learner_id\":\(learner_id), \"activity_id\": \(activity_id), \"activity_type\": \"\(activity_type)\"\n}\n]\n}\n}".dataUsingEncoding(NSUTF8StringEncoding);
+        request.HTTPBody = "{\"performance\": {\"data\": [{\"learner_id\":\(learner_id), \"activity_id\": \(activity_id), \"activity_type\": \"\(activity_type)\"}]}}".dataUsingEncoding(NSUTF8StringEncoding);
+        println("Request looks like \(request). Activity id is \(activity_id)")
         
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { (data: NSData!, response: NSURLResponse!, error: NSError!) in

@@ -224,8 +224,9 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        mixpanel.identify("\(learnerID!)");
-//        mixpanel.track("Chose a subject")
+        var thisTitle = data[indexPath.row]["title"] as! NSString;
+        mixpanel.identify("\(learnerID!)");
+        mixpanel.track("Chose storyset", properties: ["title": "\(thisTitle)"])
         var vc: VideosCollectionController = self.storyboard?.instantiateViewControllerWithIdentifier("VideoCollectionID") as! VideosCollectionController
         var specData = data[indexPath.row]["books"] as! NSArray
         vc.data = []
@@ -318,6 +319,7 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
 
     }
     
+    
     override func supportedInterfaceOrientations() -> Int {
         return Int(UIInterfaceOrientationMask.Landscape.rawValue)
     }
@@ -333,7 +335,7 @@ class SubjectsCollectionController: UIViewController, UICollectionViewDelegate, 
         println("Sending out mixpanel message with email: \(email), learnerID: \(learnerID), date: \(NSDate())")
         mixpanel.identify("\(learnerID)");
         mixpanel.people.set(["$email":"\(email)", "$first_name":"\(thisLearnerName)", "$created": "\(NSDate())", "owner_name":"\(ownerName)", "owner_id":"\(userID)", "owner_type":"\(ownerType)"])
-        mixpanel.track("Opened app")
+        mixpanel.track("Opened Books App")
     }
     
     

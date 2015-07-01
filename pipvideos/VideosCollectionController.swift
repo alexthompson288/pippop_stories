@@ -108,7 +108,7 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         println("998877 - There are \(self.VideosCollectionView.numberOfItemsInSection(0)) items in the section.")
         ParentGateView.hidden = true
         PaymentView.hidden = true
-        
+        self.learnerId = NSUserDefaults.standardUserDefaults().objectForKey("learnerID") as! Int
         self.accessToken = NSUserDefaults.standardUserDefaults().objectForKey("access_token") as! String
 
         //        var token = NSUserDefaults.standardUserDefaults().objectForKey("access_token") as! NSString
@@ -186,8 +186,27 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         }
         Mycell.activityId = activityId
         
-//        SET THE IMAGE ON THE BUTTON
+//        SEE IF AVAILABLE OFFLINE
+        var bookpages = data[indexPath.row]["bookpages"] as! NSArray
+        var missing = false
         let cachedir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0] as! NSString
+
+        for book in bookpages {
+            println("looping bookpages...")
+            var localImg = book["url_image_local"] as! String
+            var fullPath = "/\(cachedir)/\(localImg)"
+            if filemgr.fileExistsAtPath(fullPath){
+                println("There is an image saved locally.")
+            } else {
+                println("Page is missing")
+                missing = true
+            }
+        }
+        if missing == false {
+            Mycell.ContainerView.backgroundColor = ColourValues.greenColor
+        }
+        
+//        SET THE IMAGE ON THE BUTTON
         var cachedImgURL = NSURL()
         if let cacheURLDir = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
 //            println("The cached URL is \(cacheURLDir)")
@@ -235,6 +254,9 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
             canWatch = false
         }
         if canWatch == true {
+            var thisTitle = data[indexPath.row]["title"] as! String
+            mixpanel.identify("\(self.learnerId)")
+            mixpanel.track("Read story", properties: ["title": "\(thisTitle)"])
             var vc:ReadingContentController = self.storyboard?.instantiateViewControllerWithIdentifier("ReadingContentID") as! ReadingContentController
             var specData = data[indexPath.row]["bookpages"] as! NSArray
             vc.activityData = []
@@ -243,6 +265,9 @@ class VideosCollectionController: UIViewController, UICollectionViewDelegate, UI
         } else {
             showPaymentView()
         }
+        var activityId = data[indexPath.row]["id"] as! Int
+        println("access token \(accessToken), learner id \(learnerId), activitiy id \(activityId)")
+        Utility.postActivityDataToServers(accessToken, learner_id: learnerId, activity_id: activityId, activity_type: "Cms::Book")
     }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {

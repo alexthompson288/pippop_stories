@@ -13,6 +13,7 @@ struct Constants {
     static let productionBaseUrl = "https://pippoplearning.com/"
     static let apiUrl = "https://pippoplearning.com/api/v3/digitalexperiences"
     static let homedir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+    static let cachedir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0] as! String
     static let BucketName = "pippopugc"
     static let s3BaseUrl = "https://s3-eu-west-1.amazonaws.com"
     static let RailsImageUrl = "https://www.pippoplearning.com/api/v3/learnerimagecreate"

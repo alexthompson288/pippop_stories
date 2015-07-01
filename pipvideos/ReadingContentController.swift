@@ -22,7 +22,7 @@ class ReadingContentController: UIViewController, UIPageViewControllerDataSource
     override func viewDidLoad() {
         println("Reading content VC Loaded.")
         println("Activity show view loaded. Activity data has \(activityData.count) pages")
-        
+        downloadPageImages()
         
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
@@ -38,6 +38,13 @@ class ReadingContentController: UIViewController, UIPageViewControllerDataSource
         self.view.addSubview(self.pageViewController.view)
         self.pageViewController.didMoveToParentViewController(self)
         
+    }
+    
+    func downloadPageImages(){
+        for page in activityData {
+            var thisDict: NSDictionary = page as! NSDictionary
+            Utility.writeImagesLocally(thisDict)
+        }
     }
     
     @IBAction func BackToBooksButton(sender: AnyObject) {
@@ -56,9 +63,17 @@ class ReadingContentController: UIViewController, UIPageViewControllerDataSource
         }
         
         var vc: ContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ContentViewController") as! ContentViewController
-        
+        var mediaType = ""
         println("Creating view controller number \(index). About to set data...")
-        
+        if let audioPresent = self.activityData[index]["url_audio_remote"] as? String{
+            if audioPresent != "" {
+                println("There is audio here...")
+                mediaType = "audio"
+                vc.url_audio_remote = self.activityData[index]["url_audio_remote"] as! String
+                vc.url_audio_local = self.activityData[index]["url_audio_local"] as! String
+            }
+        }
+        vc.mediaType = mediaType
         vc.imageFile = self.activityData[index]["url_image_remote"] as! String
         vc.localImageFile = self.activityData[index]["url_image_local"] as! String
         vc.dataDict = self.activityData[index] as! NSDictionary
